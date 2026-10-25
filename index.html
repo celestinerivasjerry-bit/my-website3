@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ardev — Solusi Digital Lengkap untuk Kebutuhan Anda</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Plus Jakarta Sans & Caveat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        script: ['Caveat', 'cursive'],
+                    },
+                    colors: {
+                        brand: {
+                            blue: '#0055ff',
+                            darkblue: '#003eb3',
+                            navy: '#051129',
+                            lightblue: '#eef4ff',
+                            softbg: '#f8fafc',
+                            cardborder: '#e2e8f0',
+                            textdark: '#0f172a',
+                            textmuted: '#64748b'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #0f172a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Levitating Animation */
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(0.8deg); }
+        }
+
+        @keyframes floatReverse {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .animate-float { animation: floatSlow 5s ease-in-out infinite; }
+        .animate-float-delayed { animation: floatReverse 6s ease-in-out 1s infinite; }
+
+        /* Typewriter Cursor */
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.1em;
+            background-color: #0055ff;
+            margin-left: 3px;
+            vertical-align: -0.15em;
+            animation: blinkCursor 0.8s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Preloader Smooth Dismiss */
+        #preloader.dismissed {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-100%);
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: #0055ff; }
+    </style>
+</head>
+<body class="selection:bg-brand-blue selection:text-white">
+
+    <!-- ========================================== -->
+    <!-- PRELOADER SCREEN (SAFE & ANTI STUCK)       -->
+    <!-- ========================================== -->
+    <div id="preloader" class="fixed inset-0 z-[100] bg-[#050a18] flex flex-col items-center justify-center">
+        <!-- Ambient Mesh Background Glow -->
+        <div class="absolute w-72 h-72 bg-blue-600/20 rounded-full blur-3xl -top-10 -left-10 pointer-events-none"></div>
+        <div class="absolute w-72 h-72 bg-cyan-500/15 rounded-full blur-3xl -bottom-10 -right-10 pointer-events-none"></div>
+
+        <div class="relative flex flex-col items-center max-w-sm w-full px-6 text-center z-10">
+            <!-- Brand Text Logo -->
+            <div class="mb-3 flex items-center justify-center">
+                <span class="text-3xl font-extrabold tracking-widest text-white uppercase font-mono">ardev</span>
+            </div>
+
+            <p class="text-[11px] text-cyan-400 font-semibold tracking-wider uppercase mb-6">Digital Agency & Ecosystem Partner</p>
+
+            <!-- Progress Bar Frame -->
+            <div class="w-full bg-slate-800 border border-slate-700/60 rounded-full h-2 p-0.5 overflow-hidden mb-3">
+                <div id="preloader-bar" class="h-full bg-gradient-to-r from-blue-600 via-cyan-400 to-white w-0 transition-all duration-75 ease-out rounded-full shadow-[0_0_12px_rgba(0,210,255,0.8)]"></div>
+            </div>
+
+            <div id="preloader-counter" class="text-xs font-mono font-bold text-cyan-400">0%</div>
+        </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- NAVBAR                                     -->
+    <!-- ========================================== -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-100 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Logo Image PNG dengan fallback text -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <img src="logo.png" alt="ardev Logo" class="h-9 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.style.display='none'; document.getElementById('nav-alt-text').style.display='block';">
+                    <span id="nav-alt-text" class="hidden text-2xl font-extrabold tracking-tight text-slate-900">ardev</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-600">
+                    <a href="#beranda" class="text-brand-blue border-b-2 border-brand-blue pb-0.5">Beranda</a>
+                    <a href="#layanan" class="hover:text-brand-blue transition-colors">Layanan</a>
+                    <a href="#tentang" class="hover:text-brand-blue transition-colors">Tentang</a>
+                    <a href="#cara-kerja" class="hover:text-brand-blue transition-colors">Cara Kerja</a>
+                    <a href="#faq" class="hover:text-brand-blue transition-colors">FAQ</a>
+                </nav>
+
+                <!-- Header CTA Button -->
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20ingin%20konsultasi%20layanan" target="_blank" class="px-6 py-2.5 rounded-full bg-brand-blue hover:bg-brand-darkblue text-white text-sm font-semibold shadow-md shadow-brand-blue/20 transition-all flex items-center gap-2 hover:scale-105">
+                        <i class="fa-solid fa-paper-plane text-xs"></i> Hubungi Kami
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-slate-600 hover:text-brand-blue focus:outline-none">
+                    <i id="mobile-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-6 space-y-3 shadow-lg">
+            <a href="#beranda" class="block px-3 py-2 rounded-lg text-brand-blue font-bold bg-brand-lightblue">Beranda</a>
+            <a href="#layanan" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Layanan</a>
+            <a href="#tentang" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Tentang</a>
+            <a href="#cara-kerja" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">Cara Kerja</a>
+            <a href="#faq" class="block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 font-medium">FAQ</a>
+            <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20ingin%20konsultasi%20layanan" target="_blank" class="w-full mt-2 flex items-center justify-center gap-2 py-3 px-4 bg-brand-blue text-white font-semibold rounded-full shadow-md">
+                <i class="fa-solid fa-paper-plane text-xs"></i> Hubungi Kami
+            </a>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- HERO SECTION                               -->
+    <!-- ========================================== -->
+    <section id="beranda" class="pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden relative bg-gradient-to-b from-slate-50 via-white to-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Hero Left Content -->
+                <div class="lg:col-span-6 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-lightblue text-brand-blue text-xs font-bold tracking-wide">
+                        Digital Services & Creative Solutions
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-[3.25rem] font-extrabold text-slate-900 tracking-tight leading-[1.18]">
+                        Solusi Digital Lengkap untuk <br class="hidden sm:block" />
+                        <span id="typing-text" class="text-brand-blue"></span><span class="typing-cursor"></span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl mx-auto lg:mx-0">
+                        <strong class="text-slate-900">Ardev</strong> hadir untuk membantu individu, UMKM, dan bisnis mewujudkan ide dan kebutuhan digital Anda dengan layanan profesional, cepat, dan berkualitas.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#layanan" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-blue hover:bg-brand-darkblue text-white font-bold text-sm shadow-lg shadow-brand-blue/25 hover:scale-105 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-paper-plane text-xs"></i> Lihat Layanan
+                        </a>
+                        <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20ingin%20bertanya" target="_blank" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-200 hover:border-brand-blue transition-all shadow-sm flex items-center justify-center gap-2">
+                            <i class="fa-regular fa-comment text-brand-blue"></i> Hubungi Kami
+                        </a>
+                    </div>
+
+                    <div class="pt-6 border-t border-slate-200/80 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs sm:text-sm font-semibold text-slate-600">
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-brand-lightblue text-brand-blue flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            Cepat & Responsif
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-brand-lightblue text-brand-blue flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            Hasil Berkualitas
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-6 h-6 rounded-full bg-brand-lightblue text-brand-blue flex items-center justify-center text-xs">
+                                <i class="fa-solid fa-tag"></i>
+                            </div>
+                            Harga Terjangkau
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Right Mockup Illustration -->
+                <div class="lg:col-span-6 relative">
+                    <div class="relative mx-auto max-w-lg lg:max-w-none">
+                        <div class="absolute -top-10 -right-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl"></div>
+                        <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-brand-blue/15 rounded-full blur-3xl"></div>
+
+                        <div class="relative bg-white rounded-3xl p-4 sm:p-6 shadow-2xl border border-slate-100">
+                            <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                                <span class="text-xs font-bold text-slate-400 font-mono">ardev-agency.com</span>
+                            </div>
+
+                            <div class="relative bg-white rounded-2xl p-6 sm:p-10 text-slate-900 min-h-[300px] sm:min-h-[340px] flex flex-col items-center justify-center text-center overflow-hidden border border-slate-200/60 shadow-inner">
+                                <img src="logo.png" alt="ardev" class="h-16 sm:h-20 w-auto object-contain mb-2" onerror="this.style.display='none'; document.getElementById('hero-alt-text').style.display='block';">
+                                <h3 id="hero-alt-text" class="hidden text-3xl font-extrabold text-slate-900">ardev</h3>
+                                <p class="text-xs text-brand-blue tracking-widest uppercase font-bold mt-1">Your Digital Partner</p>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badges -->
+                        <div class="absolute -top-6 left-4 sm:-left-6 bg-white/95 backdrop-blur-md px-4 py-3 rounded-2xl shadow-xl border border-slate-100 animate-float flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center font-bold text-base">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Creative</p>
+                                <p class="text-xs font-bold text-slate-900">Digital Services</p>
+                            </div>
+                        </div>
+
+                        <div class="absolute -bottom-6 right-4 sm:-right-6 bg-white/95 backdrop-blur-md px-5 py-4 rounded-2xl shadow-xl border border-slate-100 animate-float-delayed flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-brand-blue text-white flex items-center justify-center font-bold text-lg shadow-lg shadow-brand-blue/30">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs font-extrabold text-slate-900">100% Guaranteed</p>
+                                <p class="text-[11px] font-medium text-slate-500">Fast & Precision Work</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- SERVICES SECTION (8 CARDS)                 -->
+    <!-- ========================================== -->
+    <section id="layanan" class="py-24 bg-white relative border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="px-3.5 py-1.5 rounded-full bg-brand-lightblue text-brand-blue text-xs font-bold uppercase tracking-wider inline-block mb-3">
+                    Layanan Kami
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Layanan Lengkap, Satu Solusi
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-3 leading-relaxed">
+                    Berbagai layanan digital yang siap membantu kebutuhan Anda, dari administrasi hingga pengembangan bisnis online.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- 1. Jasa Ketik Excel, Word, PPT -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa Ketik Excel, Word, PPT</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Pengetikan data, dokumen, tabel, serta presentasi dengan rapi dan tepat waktu.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20Ketik%20Excel/Word/PPT" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 2. Jasa Pembuatan Makalah & Laporan -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-file-pen"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa Pembuatan Makalah, Laporan dan Editing Dokumen</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Pembuatan makalah, laporan, serta editing dokumen sesuai kebutuhan Anda.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20Pembuatan%20Makalah/Laporan" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 3. Jasa Editing Video -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa Editing Video</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Editing video untuk berbagai kebutuhan, mulai dari konten sosial media hingga kebutuhan bisnis.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20Editing%20Video" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 4. Jasa Pembuatan Konten -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-icons"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa Pembuatan Konten</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Konten kreatif untuk sosial media, branding, promosi, dan kebutuhan digital lainnya.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20Pembuatan%20Konten" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 5. Jasa FO -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-user-headset"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa FO</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Layanan voice over / front office untuk kebutuhan bisnis, event, atau proyek Anda.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20FO" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 6. Private Digital Marketing -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Private Digital Marketing</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Strategi pemasaran digital khusus untuk e-commerce, sosial media, dan affiliate.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Private%20Digital%20Marketing" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 7. Jasa Pembuatan Web -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa Pembuatan Web</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Website profesional, modern, dan responsif sesuai kebutuhan bisnis atau personal Anda.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20Pembuatan%20Web" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- 8. Jasa Pembuatan Landing Page -->
+                <div class="bg-white rounded-2xl p-6 border border-slate-200/80 hover:border-brand-blue hover:shadow-xl hover:shadow-brand-blue/5 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-xl font-bold mb-5 group-hover:bg-brand-blue group-hover:text-white transition-colors">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">Jasa Pembuatan Landing Page</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed mb-6">
+                            Landing page yang menarik, berfokus pada konversi untuk meningkatkan penjualan Anda.
+                        </p>
+                    </div>
+                    <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20butuh%20Jasa%20Pembuatan%20Landing%20Page" target="_blank" class="text-xs font-bold text-brand-blue flex items-center gap-1.5 group-hover:gap-2.5 transition-all">
+                        Pesan Layanan <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ABOUT SECTION (DARK ROYAL BLUE BANNER)     -->
+    <!-- ========================================== -->
+    <section id="tentang" class="py-12 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-gradient-to-r from-brand-navy via-[#002b80] to-brand-blue rounded-3xl p-8 sm:p-12 lg:p-16 text-white shadow-2xl relative overflow-hidden">
+                <div class="absolute -right-16 -top-16 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -left-16 -bottom-16 w-80 h-80 bg-brand-blue/30 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center relative z-10">
+                    <div class="lg:col-span-7 space-y-6">
+                        <span class="px-3.5 py-1.5 rounded-full bg-white/10 text-blue-200 text-xs font-bold uppercase tracking-wider inline-block border border-white/10">
+                            Tentang Ardev
+                        </span>
+
+                        <h2 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-snug">
+                            Bukan Sekadar Jasa, <br class="hidden sm:block" />
+                            Tapi Solusi untuk Pertumbuhan Anda
+                        </h2>
+
+                        <p class="text-blue-100 text-sm sm:text-base leading-relaxed max-w-xl">
+                            <strong class="text-white">Ardev</strong> adalah digital service agency yang berfokus pada layanan kreatif dan teknologi untuk membantu Anda lebih produktif, menjangkau lebih banyak pelanggan, dan mengembangkan bisnis secara online maupun offline.
+                        </p>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
+                                <i class="fa-solid fa-user-check text-brand-blue text-sm bg-white p-1.5 rounded-lg"></i>
+                                <span class="text-xs font-bold text-white">Profesional</span>
+                            </div>
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
+                                <i class="fa-solid fa-arrows-rotate text-brand-blue text-sm bg-white p-1.5 rounded-lg"></i>
+                                <span class="text-xs font-bold text-white">Fleksibel</span>
+                            </div>
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
+                                <i class="fa-solid fa-shield-check text-brand-blue text-sm bg-white p-1.5 rounded-lg"></i>
+                                <span class="text-xs font-bold text-white">Terpercaya</span>
+                            </div>
+                            <div class="flex items-center gap-2 p-2.5 rounded-xl bg-white/10 border border-white/10 backdrop-blur-sm">
+                                <i class="fa-solid fa-tags text-brand-blue text-sm bg-white p-1.5 rounded-lg"></i>
+                                <span class="text-xs font-bold text-white">Harga Transparan</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 relative flex justify-center">
+                        <div class="relative max-w-sm w-full bg-slate-900/90 rounded-2xl p-5 border border-white/15 shadow-2xl">
+                            <div class="bg-gradient-to-br from-slate-950 to-brand-navy rounded-xl p-6 text-center border border-white/10 relative overflow-hidden min-h-[220px] flex flex-col items-center justify-center">
+                                <span class="text-2xl font-extrabold text-white mb-1">ardev</span>
+                                <p class="text-xs text-blue-200">Workstation & Creative Digital Lab</p>
+                                <div class="absolute bottom-3 right-4 font-script text-2xl sm:text-3xl text-blue-300 -rotate-6 drop-shadow-md">
+                                    Your Digital Partner
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- HOW IT WORKS SECTION (CARA KERJA)          -->
+    <!-- ========================================== -->
+    <section id="cara-kerja" class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="px-3.5 py-1.5 rounded-full bg-brand-lightblue text-brand-blue text-xs font-bold uppercase tracking-wider inline-block mb-3">
+                    Cara Kerja
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Proses Mudah, Hasil Maksimal
+                </h2>
+                <p class="text-slate-600 text-sm sm:text-base mt-3">
+                    Kami membuat proses pemesanan layanan jadi lebih mudah dan cepat.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 relative">
+                <!-- Step 1 -->
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative hover:border-brand-blue transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-9 h-9 rounded-full bg-brand-blue text-white font-extrabold text-sm flex items-center justify-center">01</span>
+                        <div class="w-10 h-10 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-lg">
+                            <i class="fa-regular fa-comments"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1">Konsultasi</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed">Ceritakan kebutuhan Anda melalui chat atau form pemesanan.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative hover:border-brand-blue transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-9 h-9 rounded-full bg-brand-blue text-white font-extrabold text-sm flex items-center justify-center">02</span>
+                        <div class="w-10 h-10 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-lg">
+                            <i class="fa-regular fa-file-code"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1">Pengerjaan</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed">Tim kami mulai mengerjakan sesuai dengan permintaan Anda.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative hover:border-brand-blue transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-9 h-9 rounded-full bg-brand-blue text-white font-extrabold text-sm flex items-center justify-center">03</span>
+                        <div class="w-10 h-10 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-lg">
+                            <i class="fa-regular fa-circle-check"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1">Review</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed">Anda akan mendapatkan hasil untuk diperiksa dan direvisi jika diperlukan.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="bg-slate-50 rounded-2xl p-6 border border-slate-200/80 relative hover:border-brand-blue transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="w-9 h-9 rounded-full bg-brand-blue text-white font-extrabold text-sm flex items-center justify-center">04</span>
+                        <div class="w-10 h-10 rounded-xl bg-brand-lightblue text-brand-blue flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1">Selesai</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed">Setelah disetujui, hasil akan kami kirimkan sesuai kesepakatan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- FAQ ACCORDION SECTION                      -->
+    <!-- ========================================== -->
+    <section id="faq" class="py-20 bg-slate-50 border-t border-slate-200/80">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="px-3.5 py-1.5 rounded-full bg-brand-lightblue text-brand-blue text-xs font-bold uppercase tracking-wider inline-block mb-3">
+                    Pertanyaan Umum
+                </span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Frequently Asked Questions</h2>
+                <p class="text-slate-600 text-sm mt-2">Segala pertanyaan populer seputar layanan digital ardev.</p>
+            </div>
+
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full px-6 py-4 text-left font-bold text-slate-900 text-sm sm:text-base flex items-center justify-between gap-4 hover:text-brand-blue transition-colors">
+                        <span>Bagaimana cara memulai order di ardev?</span>
+                        <i class="fa-solid fa-chevron-down text-brand-blue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 px-6 bg-slate-50/50">
+                        <p class="py-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Cukup klik tombol "Konsultasi WhatsApp" atau pilih pesan layanan. Tim kami akan mendiskusikan kebutuhan, memberikan harga final, dan langsung memulai pengerjaan setelah deal.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full px-6 py-4 text-left font-bold text-slate-900 text-sm sm:text-base flex items-center justify-between gap-4 hover:text-brand-blue transition-colors">
+                        <span>Apakah kerahasiaan dokumen/file bisnis saya terjamin?</span>
+                        <i class="fa-solid fa-chevron-down text-brand-blue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 px-6 bg-slate-50/50">
+                        <p class="py-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Tentu. Kami menerapkan privasi ketat. Seluruh data, file Excel/Word/PPT, maupun aset video Anda tidak akan pernah dipublikasikan atau diberikan ke pihak ketiga.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden transition-all">
+                    <button class="faq-btn w-full px-6 py-4 text-left font-bold text-slate-900 text-sm sm:text-base flex items-center justify-between gap-4 hover:text-brand-blue transition-colors">
+                        <span>Apakah ada garansi revisi jika ada kekurangan?</span>
+                        <i class="fa-solid fa-chevron-down text-brand-blue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 px-6 bg-slate-50/50">
+                        <p class="py-4 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Ya, kami memberikan garansi revisi hingga hasil pengerjaan sesuai dengan ketentuan kesepakatan awal (brief).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- FOOTER ULTRA MODERN & ELEGAN               -->
+    <!-- ========================================== -->
+    <footer id="kontak" class="bg-gradient-to-b from-[#051129] via-[#030a1a] to-[#01050e] text-white pt-20 pb-10 border-t border-blue-900/40 relative overflow-hidden">
+        <!-- Ambient Glowing Elements Background -->
+        <div class="absolute w-96 h-96 bg-brand-blue/10 rounded-full blur-3xl -top-20 -left-20 pointer-events-none"></div>
+        <div class="absolute w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl bottom-0 right-0 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            
+            <!-- Main Grid Footer Content (4 Columns) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-slate-800/80">
+                
+                <!-- Col 1: Brand Info & Tagline (4 cols) -->
+                <div class="lg:col-span-4 space-y-5">
+                    <a href="#" class="inline-flex items-center gap-3">
+                        <img src="logo.png" alt="ardev logo" class="h-10 w-auto object-contain brightness-0 invert" onerror="this.style.display='none'; document.getElementById('footer-alt-logo').style.display='block';">
+                        <span id="footer-alt-logo" class="hidden text-2xl font-extrabold tracking-tight text-white font-mono">ardev</span>
+                    </a>
+                    
+                    <p class="text-sm text-slate-400 leading-relaxed max-w-sm">
+                        Partner ekosistem digital terpercaya. Menyediakan pengerjaan dokumen administrasi, editing multimedia kreatif, hingga solusi sistem web & landing page profesional.
+                    </p>
+
+                    <!-- Trust Badges -->
+                    <div class="flex items-center gap-3 pt-2">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold text-cyan-400">
+                            <i class="fa-solid fa-shield-halved text-xs"></i> 100% Privacy
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold text-brand-blue">
+                            <i class="fa-solid fa-bolt text-xs"></i> Fast Service
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Col 2: Quick Links (2 cols) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">Navigasi</h4>
+                    <ul class="space-y-2.5 text-xs font-medium text-slate-300">
+                        <li><a href="#beranda" class="hover:text-brand-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-slate-600"></i> Beranda</a></li>
+                        <li><a href="#layanan" class="hover:text-brand-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-slate-600"></i> Layanan Kami</a></li>
+                        <li><a href="#tentang" class="hover:text-brand-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-slate-600"></i> Tentang Ardev</a></li>
+                        <li><a href="#cara-kerja" class="hover:text-brand-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-slate-600"></i> Cara Kerja</a></li>
+                        <li><a href="#faq" class="hover:text-brand-blue transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-[9px] text-slate-600"></i> FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Services Summary (3 cols) -->
+                <div class="lg:col-span-3 space-y-4">
+                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">Layanan Populer</h4>
+                    <ul class="space-y-2.5 text-xs font-medium text-slate-300">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-file-excel text-green-400"></i> Pengetikan Excel, Word, PPT</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-video text-purple-400"></i> Editing Video & Konten SOSMED</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-bullhorn text-pink-400"></i> Private Digital Marketing</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-laptop-code text-brand-blue"></i> Pembuatan Website & Landing Page</li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Official Social & Direct Contact (3 cols) -->
+                <div class="lg:col-span-3 space-y-4">
+                    <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">Kontak & Lokasi</h4>
+                    
+                    <div class="space-y-2.5">
+                        <!-- Instagram Button -->
+                        <a href="https://www.instagram.com/jasaardev?cplk=MWk1Zm4yMG5raGFrcg==" target="_blank" class="w-full p-3 rounded-xl bg-white/5 border border-white/10 hover:border-pink-500/50 hover:bg-pink-500/10 transition-all flex items-center gap-3 group">
+                            <div class="w-8 h-8 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-medium">Instagram Resmi</p>
+                                <p class="text-xs font-bold text-white group-hover:text-pink-400 transition-colors">@jasaardev</p>
+                            </div>
+                        </a>
+
+                        <!-- Google Maps Button -->
+                        <a href="https://share.google/vrdPjQ1w51zcmWXT8" target="_blank" class="w-full p-3 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-500/10 transition-all flex items-center gap-3 group">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] text-slate-400 font-medium">Google Business Profile</p>
+                                <p class="text-xs font-bold text-white group-hover:text-emerald-400 transition-colors">JASA ARDEV di Maps</p>
+                            </div>
+                        </a>
+
+                        <!-- WhatsApp Direct Button -->
+                        <a href="https://wa.me/6281234567890?text=Halo%20ardev,%20saya%20ingin%20konsultasi" target="_blank" class="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-brand-blue to-cyan-500 hover:from-brand-darkblue hover:to-brand-blue text-white font-bold text-xs shadow-lg shadow-brand-blue/20 transition-all flex items-center justify-center gap-2 mt-2">
+                            <i class="fa-brands fa-whatsapp text-sm"></i> Konsultasi via WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; 2026 <strong class="text-slate-300">Ardev Agency</strong>. All rights reserved.</p>
+                <div class="flex items-center gap-6 text-slate-400 text-sm">
+                    <a href="https://www.instagram.com/jasaardev?cplk=MWk1Zm4yMG5raGFrcg==" target="_blank" class="hover:text-pink-400 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://share.google/vrdPjQ1w51zcmWXT8" target="_blank" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-map-location-dot"></i></a>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="hover:text-green-400 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- JAVASCRIPT LOGIC (AMANI ANTI STUCK)        -->
+    <!-- ========================================== -->
+    <script>
+        function forceDismissPreloader() {
+            const preloader = document.getElementById('preloader');
+            if (preloader && !preloader.classList.contains('dismissed')) {
+                preloader.classList.add('dismissed');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }
+        }
+
+        let progress = 0;
+        const bar = document.getElementById('preloader-bar');
+        const counter = document.getElementById('preloader-counter');
+
+        const timer = setInterval(() => {
+            progress += 25;
+            if (bar) bar.style.width = progress + '%';
+            if (counter) counter.innerText = progress + '%';
+
+            if (progress >= 100) {
+                clearInterval(timer);
+                forceDismissPreloader();
+            }
+        }, 60);
+
+        // Pengaman Maksimal 400ms Wajib Masuk
+        setTimeout(forceDismissPreloader, 400);
+
+        // Typewriter Effect
+        const phrases = ["Kebutuhan Anda", "Bisnis & UMKM", "Mahasiswa & Akademisi", "Pekerjaan Administrasi", "Sistem Website & Landing Page"];
+        let phraseIdx = 0, charIdx = 0, isDeleting = false;
+        const typingEl = document.getElementById('typing-text');
+
+        function smoothType() {
+            if (!typingEl) return;
+            const current = phrases[phraseIdx];
+            typingEl.textContent = isDeleting ? current.substring(0, charIdx - 1) : current.substring(0, charIdx + 1);
+            charIdx = isDeleting ? charIdx - 1 : charIdx + 1;
+
+            let speed = isDeleting ? 30 : 60;
+            if (!isDeleting && charIdx === current.length) { speed = 1800; isDeleting = true; }
+            else if (isDeleting && charIdx === 0) { isDeleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; speed = 300; }
+
+            setTimeout(smoothType, speed);
+        }
+        document.addEventListener('DOMContentLoaded', smoothType);
+
+        // FAQ Accordion Toggle
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('i');
+
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    content.style.maxHeight = '0px';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
+                    document.querySelectorAll('.faq-btn i').forEach(i => i.style.transform = 'rotate(0deg)');
+
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileIcon = document.getElementById('mobile-icon');
+
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                if (mobileIcon) {
+                    mobileIcon.classList.toggle('fa-bars');
+                    mobileIcon.classList.toggle('fa-xmark');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
